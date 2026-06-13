@@ -74,7 +74,49 @@ This may change as Android permission constraints and target SDK requirements ar
 
 ## Repository Status
 
-This repository is currently at the planning stage. The first milestone is to turn this README into a concrete Android project skeleton and implementation plan.
+This repository now contains an Android MVP implementation with:
+
+- all-files access permission onboarding,
+- QQ and WeChat scan roots for personal Redmi-device use,
+- folder-purpose explanations,
+- file classification and cleanup-risk analysis,
+- manual file selection,
+- confirmed safe deletion,
+- cleanup result records,
+- unit tests for rules, analyzer, scanner, and deletion safeguards.
+
+## Build And Run
+
+Prerequisites:
+
+- JDK 17.
+- Android SDK with platform 35 and build tools installed.
+
+Build the debug APK:
+
+```powershell
+.\gradlew.bat assembleDebug
+```
+
+Run unit tests:
+
+```powershell
+.\gradlew.bat testDebugUnitTest
+```
+
+Debug APK output:
+
+```text
+app/build/outputs/apk/debug/app-debug.apk
+```
+
+Install on a connected Android device:
+
+```powershell
+adb install -r app/build/outputs/apk/debug/app-debug.apk
+```
+
+On Android 11+, open the app and grant all-files access when prompted. Cleanner is currently designed for personal installation, not Google Play distribution.
 
 ## Author
 
