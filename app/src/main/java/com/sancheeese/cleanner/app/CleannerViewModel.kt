@@ -39,6 +39,16 @@ class CleannerViewModel(
     private val historyStore: CleanupHistoryStore = PreferencesCleanupHistoryStore(application),
     private val metadataReader: AndroidMetadataReader = AndroidMetadataReader(application)
 ) : AndroidViewModel(application) {
+    constructor(application: Application) : this(
+        application = application,
+        permissionGateway = PermissionGateway(application),
+        scanner = LocalFileScanner(),
+        analyzer = FileAnalyzer(FolderRuleRegistry.default()),
+        deletionEngine = SafeDeletionEngine(),
+        historyStore = PreferencesCleanupHistoryStore(application),
+        metadataReader = AndroidMetadataReader(application)
+    )
+
     private val _state = MutableStateFlow(
         CleannerUiState(
             hasPermission = permissionGateway.hasAllFilesAccess(),
