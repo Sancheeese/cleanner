@@ -116,8 +116,27 @@ Install on a connected Android device:
 adb install -r app/build/outputs/apk/debug/app-debug.apk
 ```
 
+For faster phone testing, keep the phone connected with USB debugging enabled and run:
+
+```powershell
+.\scripts\install-debug.ps1
+```
+
+This builds the debug APK, installs it on the connected device, and launches Cleanner. If multiple devices are connected, pass the device id:
+
+```powershell
+.\scripts\install-debug.ps1 -Device <adb-device-id>
+```
+
+To watch Cleanner crash logs while testing:
+
+```powershell
+.\scripts\logcat-cleanner.ps1
+```
+
 On Android 11+, open the app and grant all-files access when prompted. Cleanner is currently designed for personal installation, not Google Play distribution.
 
 ## Author
 
 Created by [Sancheeese](https://github.com/Sancheeese).
+
