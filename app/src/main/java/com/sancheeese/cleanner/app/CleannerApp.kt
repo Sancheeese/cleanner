@@ -1,4 +1,4 @@
-package com.sancheeese.cleanner.app
+﻿package com.sancheeese.cleanner.app
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -66,3 +66,4 @@ fun CleannerApp(viewModel: CleannerViewModel = viewModel()) {
         )
     }
 }
+

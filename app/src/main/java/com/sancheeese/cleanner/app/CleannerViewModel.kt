@@ -1,4 +1,4 @@
-package com.sancheeese.cleanner.app
+﻿package com.sancheeese.cleanner.app
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
@@ -197,7 +197,7 @@ class CleannerViewModel(
                 sizeBytes = 120_000_000,
                 lastModifiedAt = now,
                 detectedMimeType = "application/vnd.android.package-archive"
-            ) to FileMetadata.Apk("示例应用", "com.example", "1.0")
+            ) to FileMetadata.Apk("绀轰緥搴旂敤", "com.example", "1.0")
         )
         val analyzed = analyzer.analyze(samples)
         _state.update {
@@ -242,3 +242,4 @@ data class CleannerUiState(
     val reviewBytes: Long = analyzedFiles.filter { it.riskLevel == RiskLevel.ReviewRequired }.sumOf { it.scannedFile.sizeBytes }
     val categories: List<FileCategory> = analyzedFiles.map { it.category }.distinct()
 }
+

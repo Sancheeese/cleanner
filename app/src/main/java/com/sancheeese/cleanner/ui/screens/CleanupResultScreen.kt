@@ -1,4 +1,4 @@
-package com.sancheeese.cleanner.ui.screens
+﻿package com.sancheeese.cleanner.ui.screens
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -9,12 +9,14 @@ import com.sancheeese.cleanner.app.CleannerUiState
 @Composable
 fun CleanupResultScreen(
     state: CleannerUiState,
-    onDone: () -> Unit
+    onDone: () -> Unit,
+    onBack: () -> Unit = onDone
 ) {
     val result = state.cleanupResult
     ScreenScaffold(
         title = "清理完成",
-        subtitle = "结果已记录到本机。"
+        subtitle = "结果已记录到本机。",
+        onBack = onBack
     ) {
         Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
             InfoCard(

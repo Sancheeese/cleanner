@@ -1,4 +1,4 @@
-package com.sancheeese.cleanner.ui.screens
+﻿package com.sancheeese.cleanner.ui.screens
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -18,7 +18,8 @@ fun CleanupConfirmScreen(
     val riskSummary = state.selectedFiles.groupingBy { it.riskLevel.displayName }.eachCount()
     ScreenScaffold(
         title = "确认清理",
-        subtitle = "删除前最后确认一次。"
+        subtitle = "删除前最后确认一次。",
+        onBack = onBack
     ) {
         Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
             InfoCard(

@@ -1,4 +1,4 @@
-package com.sancheeese.cleanner.ui.screens
+﻿package com.sancheeese.cleanner.ui.screens
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -16,7 +16,7 @@ fun DetailScreen(
 ) {
     val file = state.selectedFile
     if (file == null) {
-        ScreenScaffold(title = "文件详情") {
+        ScreenScaffold(title = "文件详情", onBack = onBack) {
             Text("未选择文件")
             ActionRow(primaryText = "返回", onPrimary = onBack)
         }
@@ -24,7 +24,8 @@ fun DetailScreen(
     }
     ScreenScaffold(
         title = file.scannedFile.name,
-        subtitle = file.riskLevel.displayName
+        subtitle = file.riskLevel.displayName,
+        onBack = onBack
     ) {
         Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
             InfoCard("文件夹用途", file.folderProfile.purpose)

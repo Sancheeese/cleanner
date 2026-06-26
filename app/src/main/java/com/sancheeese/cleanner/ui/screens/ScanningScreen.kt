@@ -1,4 +1,4 @@
-package com.sancheeese.cleanner.ui.screens
+﻿package com.sancheeese.cleanner.ui.screens
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -12,12 +12,14 @@ import com.sancheeese.cleanner.app.CleannerUiState
 @Composable
 fun ScanningScreen(
     state: CleannerUiState,
-    onCancel: () -> Unit
+    onCancel: () -> Unit,
+    onBack: () -> Unit = onCancel
 ) {
     val progress = state.scanProgress
     ScreenScaffold(
         title = "正在扫描",
-        subtitle = "正在读取 QQ 和微信相关目录，扫描过程可以取消。"
+        subtitle = "正在读取 QQ 和微信相关目录，扫描过程可以取消。",
+        onBack = onBack
     ) {
         Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
             LinearProgressIndicator(modifier = Modifier)

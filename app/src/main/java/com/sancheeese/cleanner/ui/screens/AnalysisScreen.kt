@@ -1,4 +1,4 @@
-package com.sancheeese.cleanner.ui.screens
+﻿package com.sancheeese.cleanner.ui.screens
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -32,7 +32,8 @@ fun AnalysisScreen(
 ) {
     ScreenScaffold(
         title = "分析结果",
-        subtitle = "先看文件夹用途，再决定哪些文件要清理。"
+        subtitle = "先看文件夹用途，再决定哪些文件要清理。",
+        onBack = onBack
     ) {
         Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
             InfoCard(
