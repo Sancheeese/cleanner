@@ -18,7 +18,10 @@ class PhoneTestingScriptTest {
         assertTrue(script.contains("Assert-DeviceReady"))
         assertTrue(script.contains("No ready Android device found"))
         assertTrue(script.contains("Multiple Android devices are connected"))
-        assertTrue(script.contains("Assert-ExitCode \"adb install\""))
+        assertTrue(script.contains("INSTALL_FAILED_USER_RESTRICTED"))
+        assertTrue(script.contains("Install via USB"))
+        assertTrue(script.contains("${dollar}CommandArgs"))
+        assertFalse(script.contains("[string[]]${dollar}Args"))
         assertFalse(script.contains("& ${dollar}adb (Adb-Args"))
     }
 
@@ -28,11 +31,13 @@ class PhoneTestingScriptTest {
 
         assertTrue(script.contains("& ${dollar}adb @clearArgs"))
         assertTrue(script.contains("& ${dollar}adb @logcatArgs"))
+        assertTrue(script.contains("${dollar}CommandArgs"))
+        assertFalse(script.contains("[string[]]${dollar}Args"))
         assertFalse(script.contains("& ${dollar}adb (Adb-Args"))
     }
 
     private fun readSource(path: String): String {
-                val direct = Paths.get(path)
+        val direct = Paths.get(path)
         val parent = Paths.get("..").resolve(path).normalize()
         val sourcePath = when {
             Files.exists(direct) -> direct
@@ -42,5 +47,8 @@ class PhoneTestingScriptTest {
         return String(Files.readAllBytes(sourcePath))
     }
 }
+
+
+
 
 

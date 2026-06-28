@@ -22,11 +22,11 @@ function Find-Adb {
 }
 
 function New-AdbArgs {
-    param([string[]]$Args)
+    param([string[]]$CommandArgs)
     if ($Device.Trim().Length -gt 0) {
-        return @("-s", $Device) + $Args
+        return @("-s", $Device) + $CommandArgs
     }
-    return $Args
+    return $CommandArgs
 }
 
 function Assert-ExitCode {
@@ -86,3 +86,4 @@ Assert-ExitCode "adb logcat clear"
 
 $logcatArgs = New-AdbArgs @("logcat", "$PackageName:E", "AndroidRuntime:E", "*:S")
 & $adb @logcatArgs
+

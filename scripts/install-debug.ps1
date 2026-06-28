@@ -24,11 +24,11 @@ function Find-Adb {
 }
 
 function New-AdbArgs {
-    param([string[]]$Args)
+    param([string[]]$CommandArgs)
     if ($Device.Trim().Length -gt 0) {
-        return @("-s", $Device) + $Args
+        return @("-s", $Device) + $CommandArgs
     }
-    return $Args
+    return $CommandArgs
 }
 
 function Assert-ExitCode {
@@ -93,8 +93,19 @@ $adb = Find-Adb
 Assert-DeviceReady
 
 $installArgs = New-AdbArgs @("install", "-r", $ApkPath)
-& $adb @installArgs
-Assert-ExitCode "adb install"
+$previousErrorActionPreference = $ErrorActionPreference
+$ErrorActionPreference = "Continue"
+$installOutput = & $adb @installArgs 2>&1 | ForEach-Object { $_.ToString() }
+$installExitCode = $LASTEXITCODE
+$ErrorActionPreference = $previousErrorActionPreference
+$installOutput | ForEach-Object { Write-Host $_ }
+if ($installExitCode -ne 0) {
+    $installText = $installOutput | Out-String
+    if ($installText.Contains("INSTALL_FAILED_USER_RESTRICTED")) {
+        throw "adb install was blocked by the phone. On Xiaomi/Redmi, enable Developer options -> USB debugging, USB debugging (Security settings), and Install via USB, then accept the install prompt on the phone."
+    }
+    throw "adb install failed with exit code $installExitCode"
+}
 
 $launchArgs = New-AdbArgs @("shell", "monkey", "-p", $PackageName, "-c", "android.intent.category.LAUNCHER", "1")
 & $adb @launchArgs
@@ -103,3 +114,7 @@ Assert-ExitCode "adb launch"
 Write-Host ""
 Write-Host "Installed and launched $PackageName"
 Write-Host "APK: $ApkPath"
+
+
+
+
