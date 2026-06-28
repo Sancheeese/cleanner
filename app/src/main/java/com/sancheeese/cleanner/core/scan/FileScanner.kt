@@ -34,10 +34,17 @@ class LocalFileScanner {
     fun defaultRoots(externalStorage: File = Environment.getExternalStorageDirectory()): List<ScanRoot> {
         return listOf(
             ScanRoot(AppOwner.WeChat, File(externalStorage, "Android/media/com.tencent.mm"), "微信 Android/media"),
-            ScanRoot(AppOwner.WeChat, File(externalStorage, "tencent/MicroMsg"), "微信 tencent/MicroMsg"),
+            ScanRoot(AppOwner.WeChat, File(externalStorage, "tencent/MicroMsg"), "微信聊天文件 MicroMsg"),
+            ScanRoot(AppOwner.WeChat, File(externalStorage, "Pictures/WeiXin"), "微信保存到相册"),
             ScanRoot(AppOwner.QQ, File(externalStorage, "Android/media/com.tencent.mobileqq"), "QQ Android/media"),
-            ScanRoot(AppOwner.QQ, File(externalStorage, "tencent/QQfile_recv"), "QQ 接收文件"),
-            ScanRoot(AppOwner.QQ, File(externalStorage, "Tencent/MobileQQ"), "QQ MobileQQ")
+            ScanRoot(AppOwner.QQ, File(externalStorage, "tencent/MobileQQ"), "QQ聊天文件 MobileQQ"),
+            ScanRoot(AppOwner.QQ, File(externalStorage, "Tencent/MobileQQ"), "QQ聊天文件 MobileQQ"),
+            ScanRoot(AppOwner.QQ, File(externalStorage, "tencent/QQfile_recv"), "QQ接收文件"),
+            ScanRoot(AppOwner.QQ, File(externalStorage, "tencent/qq_images"), "QQ图片"),
+            ScanRoot(AppOwner.QQ, File(externalStorage, "tencent/audio"), "QQ语音"),
+            ScanRoot(AppOwner.QQ, File(externalStorage, "tencent/msflogs"), "QQ日志"),
+            ScanRoot(AppOwner.QQ, File(externalStorage, "tencent/com.tencent.mobileqq"), "QQ应用共享目录"),
+            ScanRoot(AppOwner.QQ, File(externalStorage, "Pictures/QQ"), "QQ保存到相册")
         )
     }
 
