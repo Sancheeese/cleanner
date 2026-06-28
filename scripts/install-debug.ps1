@@ -38,6 +38,46 @@ function Assert-ExitCode {
     }
 }
 
+function Get-ConnectedDevices {
+    $deviceOutput = & $adb devices
+    Assert-ExitCode "adb devices"
+
+    return $deviceOutput |
+        Select-Object -Skip 1 |
+        Where-Object { $_.Trim().Length -gt 0 } |
+        ForEach-Object {
+            $parts = $_ -split "\s+"
+            [PSCustomObject]@{
+                Serial = $parts[0]
+                State = $parts[1]
+                Raw = $_
+            }
+        }
+}
+
+function Assert-DeviceReady {
+    $devices = @(Get-ConnectedDevices)
+    if ($Device.Trim().Length -gt 0) {
+        $matched = $devices | Where-Object { $_.Serial -eq $Device }
+        if (-not $matched) {
+            throw "Device '$Device' was not found. Run 'adb devices -l' to check the connected device id."
+        }
+        if ($matched.State -ne "device") {
+            throw "Device '$Device' is '$($matched.State)', not ready. Check the phone screen and allow USB debugging."
+        }
+        return
+    }
+
+    $readyDevices = @($devices | Where-Object { $_.State -eq "device" })
+    if ($readyDevices.Count -eq 0) {
+        throw "No ready Android device found. Connect the phone, enable USB debugging, and allow the computer on the phone."
+    }
+    if ($readyDevices.Count -gt 1) {
+        $ids = ($readyDevices | ForEach-Object { $_.Serial }) -join ", "
+        throw "Multiple Android devices are connected: $ids. Re-run with -Device <adb-device-id>."
+    }
+}
+
 Set-Location $ProjectRoot
 
 if (-not $SkipBuild) {
@@ -50,9 +90,7 @@ if (-not (Test-Path $ApkPath)) {
 }
 
 $adb = Find-Adb
-$devicesArgs = New-AdbArgs @("devices")
-& $adb @devicesArgs
-Assert-ExitCode "adb devices"
+Assert-DeviceReady
 
 $installArgs = New-AdbArgs @("install", "-r", $ApkPath)
 & $adb @installArgs

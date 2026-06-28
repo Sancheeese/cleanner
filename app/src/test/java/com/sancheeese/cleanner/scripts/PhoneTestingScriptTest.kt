@@ -15,6 +15,9 @@ class PhoneTestingScriptTest {
 
         assertTrue(script.contains("& ${dollar}adb @installArgs"))
         assertTrue(script.contains("& ${dollar}adb @launchArgs"))
+        assertTrue(script.contains("Assert-DeviceReady"))
+        assertTrue(script.contains("No ready Android device found"))
+        assertTrue(script.contains("Multiple Android devices are connected"))
         assertTrue(script.contains("Assert-ExitCode \"adb install\""))
         assertFalse(script.contains("& ${dollar}adb (Adb-Args"))
     }
@@ -39,4 +42,5 @@ class PhoneTestingScriptTest {
         return String(Files.readAllBytes(sourcePath))
     }
 }
+
 
