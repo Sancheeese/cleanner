@@ -1,4 +1,4 @@
-param(
+﻿param(
     [string]$Device = ""
 )
 
@@ -21,7 +21,7 @@ function Find-Adb {
     throw "adb was not found. Install Android Studio platform-tools or build once in this repo so .tmp/android-sdk exists."
 }
 
-function Adb-Args {
+function New-AdbArgs {
     param([string[]]$Args)
     if ($Device.Trim().Length -gt 0) {
         return @("-s", $Device) + $Args
@@ -29,8 +29,19 @@ function Adb-Args {
     return $Args
 }
 
+function Assert-ExitCode {
+    param([string]$Step)
+    if ($LASTEXITCODE -ne 0) {
+        throw "$Step failed with exit code $LASTEXITCODE"
+    }
+}
+
 $adb = Find-Adb
 
 Write-Host "Showing recent crash/error logs for $PackageName. Press Ctrl+C to stop."
-& $adb (Adb-Args @("logcat", "-c"))
-& $adb (Adb-Args @("logcat", "$PackageName:E", "AndroidRuntime:E", "*:S"))
+$clearArgs = New-AdbArgs @("logcat", "-c")
+& $adb @clearArgs
+Assert-ExitCode "adb logcat clear"
+
+$logcatArgs = New-AdbArgs @("logcat", "$PackageName:E", "AndroidRuntime:E", "*:S")
+& $adb @logcatArgs
